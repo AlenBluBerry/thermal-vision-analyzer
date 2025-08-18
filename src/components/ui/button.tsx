@@ -18,11 +18,17 @@ const buttonVariants = cva(
           "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
+        // Thermal Analyzer Variants
+        thermal: "bg-primary text-primary-foreground hover:bg-primary-glow shadow-glow hover:shadow-[0_0_30px_hsl(var(--primary)_/_0.6)] transition-all duration-300",
+        analyzer: "bg-card border border-primary/20 text-foreground hover:bg-card-secondary hover:border-primary/40 hover:shadow-glow transition-all duration-300",
+        emission: "bg-gradient-to-r from-thermal-cool to-primary text-primary-foreground hover:from-primary-glow hover:to-thermal-warm shadow-glow transition-all duration-300",
+        danger: "bg-emission-high text-white hover:bg-emission-high/90 shadow-[0_0_20px_hsl(var(--emission-high)_/_0.4)] transition-all duration-300",
       },
       size: {
         default: "h-10 px-4 py-2",
         sm: "h-9 rounded-md px-3",
         lg: "h-11 rounded-md px-8",
+        xl: "h-14 rounded-lg px-10 text-base font-semibold",
         icon: "h-10 w-10",
       },
     },
