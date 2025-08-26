@@ -7,6 +7,9 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
+import Docs from "./pages/Docs";
+import TaxGenius from "./pages/TaxGenius";
+import More from "./pages/More";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -23,6 +26,21 @@ const App = () => (
             <Route path="/" element={
               <ProtectedRoute>
                 <Index />
+              </ProtectedRoute>
+            } />
+            <Route path="/docs" element={
+              <ProtectedRoute>
+                <Docs />
+              </ProtectedRoute>
+            } />
+            <Route path="/tax-genius" element={
+              <ProtectedRoute>
+                <TaxGenius />
+              </ProtectedRoute>
+            } />
+            <Route path="/more" element={
+              <ProtectedRoute>
+                <More />
               </ProtectedRoute>
             } />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
