@@ -2,6 +2,7 @@ import { useState, useCallback } from 'react';
 import { Upload, FileImage, Scan, Thermometer } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import { useToast } from '@/hooks/use-toast';
 
 interface ThermalUploaderProps {
   onFileUpload: (file: File) => void;
@@ -13,6 +14,22 @@ export function ThermalUploader({ onFileUpload, onStartAnalysis, isProcessing = 
   const [dragOver, setDragOver] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const { toast } = useToast();
+
+  const validateFileType = (file: File): boolean => {
+    const supportedTypes = [
+      'image/jpeg',
+      'image/jpg', 
+      'image/png',
+      'image/tiff',
+      'image/tif'
+    ];
+    
+    const supportedExtensions = ['.jpg', '.jpeg', '.png', '.tiff', '.tif'];
+    const fileExtension = file.name.toLowerCase().substring(file.name.lastIndexOf('.'));
+    
+    return supportedTypes.includes(file.type) || supportedExtensions.includes(fileExtension);
+  };
 
   const handleDragOver = useCallback((e: React.DragEvent) => {
     e.preventDefault();
@@ -29,14 +46,29 @@ export function ThermalUploader({ onFileUpload, onStartAnalysis, isProcessing = 
     setDragOver(false);
     
     const files = Array.from(e.dataTransfer.files);
-    const imageFile = files.find(file => file.type.startsWith('image/'));
+    const imageFile = files.find(file => validateFileType(file));
     
     if (imageFile) {
       handleFileSelect(imageFile);
+    } else if (files.length > 0) {
+      toast({
+        title: "Unsupported File Format",
+        description: "Please upload a thermal image in JPG, PNG, or TIFF format.",
+        variant: "destructive",
+      });
     }
-  }, []);
+  }, [toast]);
 
   const handleFileSelect = (file: File) => {
+    if (!validateFileType(file)) {
+      toast({
+        title: "Unsupported File Format",
+        description: "Please upload a thermal image in JPG, PNG, or TIFF format.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setSelectedFile(file);
     onFileUpload(file);
     
@@ -45,6 +77,11 @@ export function ThermalUploader({ onFileUpload, onStartAnalysis, isProcessing = 
       setPreviewUrl(reader.result as string);
     };
     reader.readAsDataURL(file);
+    
+    toast({
+      title: "Image Uploaded Successfully",
+      description: "Your thermal image is ready for analysis.",
+    });
   };
 
   const handleFileInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -52,6 +89,8 @@ export function ThermalUploader({ onFileUpload, onStartAnalysis, isProcessing = 
     if (file) {
       handleFileSelect(file);
     }
+    // Reset input value to allow selecting the same file again
+    e.target.value = '';
   };
 
   const startAnalysis = () => {
