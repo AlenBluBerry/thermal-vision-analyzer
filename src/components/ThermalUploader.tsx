@@ -165,18 +165,23 @@ export function ThermalUploader({ onFileUpload, onStartAnalysis, isProcessing = 
           )}
 
           <div className="mt-6 flex flex-col sm:flex-row gap-4 justify-center">
-            <label>
+            <div>
               <input
                 type="file"
                 accept=".jpg,.jpeg,.png,.tiff,.tif"
                 onChange={handleFileInput}
                 className="hidden"
+                id="file-upload"
               />
-              <Button variant="analyzer" size="lg" className="cursor-pointer">
-                <FileImage className="w-5 h-5" />
-                {previewUrl ? 'Change Image' : 'Browse Files'}
-              </Button>
-            </label>
+              <label htmlFor="file-upload">
+                <Button variant="analyzer" size="lg" className="cursor-pointer" asChild>
+                  <span>
+                    <FileImage className="w-5 h-5" />
+                    {previewUrl ? 'Change Image' : 'Browse Files'}
+                  </span>
+                </Button>
+              </label>
+            </div>
 
             {selectedFile && (
               <Button 
