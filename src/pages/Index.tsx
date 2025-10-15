@@ -1,31 +1,35 @@
-import { ThermalAnalyzer } from '@/components/ThermalAnalyzer';
-import { Navigation } from '@/components/Navigation';
-import { AuthButton } from '@/components/AuthButton';
+import { Toaster } from "@/components/ui/toaster";
+import { Toaster as Sonner } from "@/components/ui/sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+// import { AuthProvider } from "@/contexts/AuthContext"; // 🔒 Auth removed
+// import { ProtectedRoute } from "@/components/ProtectedRoute"; // 🔒 Auth removed
+import Index from "./pages/Index";
+// import Auth from "./pages/Auth"; // 🔒 Auth page removed
+// import Docs from "./pages/Docs";
+// import TaxGenius from "./pages/TaxGenius";
+// import More from "./pages/More";
+// import NotFound from "./pages/NotFound";
 
-const Index = () => {
-  return (
-    <div className="min-h-screen bg-background">
-      <Navigation />
-      
-      {/* Header */}
-      <header className="pt-20 md:pt-16 pb-8">
-        <div className="container mx-auto px-4">
-          <div className="flex justify-between items-center">
-            <div>
-              <h1 className="text-3xl font-bold text-foreground mb-2">Thermal Emission Analyzer</h1>
-              <p className="text-muted-foreground">Advanced thermal analysis and emission detection</p>
-            </div>
-            <AuthButton />
-          </div>
-        </div>
-      </header>
+const queryClient = new QueryClient();
 
-      {/* Main Content */}
-      <main className="pb-32 md:pb-8">
-        <ThermalAnalyzer />
-      </main>
-    </div>
-  );
-};
+const App = () => (
+  <QueryClientProvider client={queryClient}>
+    {/* <AuthProvider> */} {/* 🔒 Auth provider removed */}
+    <TooltipProvider>
+      <Toaster />
+      <Sonner />
+      <BrowserRouter>
+        <Routes>
+          {/* Redirect every route to Index */}
+          <Route path="/" element={<Index />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </BrowserRouter>
+    </TooltipProvider>
+    {/* </AuthProvider> */} {/* 🔒 Auth provider removed */}
+  </QueryClientProvider>
+);
 
-export default Index;
+export default App;
