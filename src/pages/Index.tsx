@@ -6,7 +6,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 // import { AuthProvider } from "@/contexts/AuthContext"; // 🔒 Auth removed
 // import { ProtectedRoute } from "@/components/ProtectedRoute"; // 🔒 Auth removed
 import Index from "./pages/Index";
-// import Auth from "./pages/Auth"; // 🔒 Auth page removed
+// import Auth from "./pages/Auth"; //  Auth page removed
 // import Docs from "./pages/Docs";
 // import TaxGenius from "./pages/TaxGenius";
 // import More from "./pages/More";
