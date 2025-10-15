@@ -3,10 +3,10 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { AuthProvider } from "@/contexts/AuthContext";
-import { ProtectedRoute } from "@/components/ProtectedRoute";
+// import { AuthProvider } from "@/contexts/AuthContext"; // 🔒 Auth removed
+// import { ProtectedRoute } from "@/components/ProtectedRoute"; // 🔒 Auth removed
 import Index from "./pages/Index";
-import Auth from "./pages/Auth";
+// import Auth from "./pages/Auth"; // 🔒 Auth page removed
 import Docs from "./pages/Docs";
 import TaxGenius from "./pages/TaxGenius";
 import More from "./pages/More";
@@ -16,39 +16,26 @@ const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <AuthProvider>
+    {/* <AuthProvider> */} {/* 🔒 Auth provider removed */}
       <TooltipProvider>
         <Toaster />
         <Sonner />
         <BrowserRouter>
           <Routes>
-            <Route path="/auth" element={<Auth />} />
-            <Route path="/" element={
-              <ProtectedRoute>
-                <Index />
-              </ProtectedRoute>
-            } />
-            <Route path="/docs" element={
-              <ProtectedRoute>
-                <Docs />
-              </ProtectedRoute>
-            } />
-            <Route path="/tax-genius" element={
-              <ProtectedRoute>
-                <TaxGenius />
-              </ProtectedRoute>
-            } />
-            <Route path="/more" element={
-              <ProtectedRoute>
-                <More />
-              </ProtectedRoute>
-            } />
+            {/* <Route path="/auth" element={<Auth />} /> */} {/* 🔒 Auth route removed */}
+
+            {/* Removed ProtectedRoute wrappers since auth is disabled */}
+            <Route path="/" element={<Index />} />
+            <Route path="/docs" element={<Docs />} />
+            <Route path="/tax-genius" element={<TaxGenius />} />
+            <Route path="/more" element={<More />} />
+
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
       </TooltipProvider>
-    </AuthProvider>
+    {/* </AuthProvider> */} {/* 🔒 Auth provider removed */}
   </QueryClientProvider>
 );
 
